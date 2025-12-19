@@ -24,17 +24,18 @@ export async function handleRequest(
     
     // Handle regular HTTP requests
     const url = new URL(request.url)
-    
-    // Check for subscription requests with /sub path
-    if (url.pathname === '/sub') {
-      // Import the subscription page dynamically
-      const { subscriptionPage } = await import('../pages/index.ts')
-      return await subscriptionPage(env, request)
-    }
+
     
     // Check for subscription requests with UUID in path
     const uuids = splitAndFilter(env.UUID, ',')
     for (const uuid of uuids) {
+      // Check for subscription requests with ${uuid}/sub path
+      if (url.pathname === `/${uuid}/sub`) {
+        // Import the subscription page dynamically
+        const { subscriptionPage } = await import('../pages/index.ts')
+        return await subscriptionPage(env, request)
+      }
+
       if (url.pathname.includes(uuid)) {
         return new Response(generateSubscription(uuid, url), {
           status: 200,
