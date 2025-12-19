@@ -30,3 +30,9 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          secrets: |
+            UUID
+            PROXY_IP
+        env:
+          UUID: ${{ vars.UUID }}
+          PROXY_IP: ${{ vars.PROXY_IP }}
