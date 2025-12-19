@@ -36,14 +36,6 @@ export async function handleRequest(
         return await subscriptionPage(env, request)
       }
 
-      if (url.pathname.includes(uuid)) {
-        return new Response(generateSubscription(uuid, url), {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/plain; charset=utf-8',
-          },
-        })
-      }
     }
     
     // Serve main index page
